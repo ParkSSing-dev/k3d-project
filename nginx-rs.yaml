@@ -1,0 +1,26 @@
+#nginx-rs.yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-rs
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx   # ← 반드시 Pod 라벨과 동일해야 함
+  template:
+    metadata:
+      labels:
+        app: nginx   # ← Pod 라벨
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14
+        ports:
+        - containerPort: 80
+        
+        
+     
+
