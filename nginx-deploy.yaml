@@ -1,0 +1,28 @@
+# nginx-deploy.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx   # ← Pod 라벨과 반드시 동일
+  strategy:
+    type: RollingUpdate # ← 롤링업데이트를 타입으로 지정
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: nginx  # ← Pod 라벨
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.21   # ← 시작 버전
+        ports:
+        - containerPort: 80
+
